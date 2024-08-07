@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Killer Whale (Orca)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+.overview-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.overview-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+<body>
+    <header>
+        <h1>Killer Whale (Orcinus orca)</h1>
+        <nav>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#characteristics">Characteristics</a></li>
+                <li><a href="#habitat">Habitat</a></li>
+                <li><a href="#behavior">Behavior</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+								<li><a href="#count">World Count</a></li>
+                <li><a href="honesty.html">Honesty</a></li>
+                <li><a href="form.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+      <section id="overview">
+  <h2>Overview</h2>
+  <p class="overview-text">
+      The killer whale, sometimes referred to as the orca and scientifically named Orcinus orca, is a fascinating marine species that captivates people's attention all around the world. These sentient beings are actually the largest members of the dolphin family, despite their moniker.
+  </p>
+</section>
+
+        <section id="characteristics">
+            <h2>Physical Characteristics</h2>
+            <p>With their remarkable black and white coloring, which includes a white underbelly, white patches around their eyes, and a gray saddle patch behind their dorsal fin, orcas are easily recognized. While females are slightly smaller, adult males can reach lengths of up to 32 feet and weights of up to 22,000 pounds.</p>
+        </section>
+
+        <section id="habitat">
+            <h2>Habitat and Distribution</h2>
+            <p>Killer whales can be found in every ocean on Earth, including tropical waters and the icy Arctic and Antarctic. They are most frequently observed, meanwhile, in colder waters that are productive.</p>
+        </section>
+
+        <section id="behavior">
+            <h2>Behavior and Social Structure</h2>
+            <p>The intricate social structure of killer whales is among their most remarkable features. They reside in close-knit family units known as pods, which can have as many as 40 members. Matriarchs lead these pods, which exhibit complex hunting strategies and vocalizations that are frequently unique to them. These behaviors resemble cultural traditions that have been passed down through the years.</p>
+        </section>
+
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <div class="gallery-row">
+                <figure>
+                    <img src="img\thomas-lipke.jpg" alt="Killer Whale breaching the water surface">
+                    <figcaption>A Killer Whale breaching the water surface. Photo by Thomas Lipke on Unsplash.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img\mike-doherty.jpg" alt="A Pod of Killer Whales swimming together">
+                    <figcaption>A pod of Killer Whales swimming together. Photo by Mike Doherty on Unsplash.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/iewek-gnos.jpg" alt="A Killer Whale underwater">
+                    <figcaption>A Killer Whale underwater. Photo by Iewek Gnos on Unsplash.</figcaption>
+                </figure>
+            </div>
+            <div class="gallery-row">
+                <figure>
+                    <img src="img/leslie-driskill.jpg" alt="Killer Whales performing in water park">
+                    <figcaption>Killer Whales performing in water park. Photo by Leslie Driskill on Unsplash.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/will-turner.jpg" alt="A Killer Whale swimming with it's calf">
+                    <figcaption>A Killer Whale swimming with it's calf Photo by Will Turner on Unsplash.</figcaption>
+                </figure>
+            </div>
+						<div class="gallery-row">
+    <figure>
+        <video controls width="320" height="240">
+            <source src="video/killerwhale1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <figcaption>Killer Whale swimming. Video by Ivan Stecko on Pexels.</figcaption>
+    </figure>
+    <figure>
+        <video controls width="320" height="240">
+            <source src="video/Whales Without Walls!.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <figcaption>Orcas migrating in numbers. Video by MarineBio.</figcaption>
+    </figure>
+</div>
+
+        </section>
+				<section id="count">
+					 <h2>World Count</h2>
+					 <table>
+							 <thead>
+									 <tr>
+											 <th>Region</th>
+											 <th>Estimated Population</th>
+									 </tr>
+							 </thead>
+							 <tbody>
+									 <tr>
+											 <td>North Pacific</td>
+											 <td>25,000</td>
+									 </tr>
+									 <tr>
+											 <td>Antarctic</td>
+											 <td>70,000</td>
+									 </tr>
+									 <tr>
+											 <td>Norwegian Coast</td>
+											 <td>3,000</td>
+									 </tr>
+									 <tr>
+											 <td>North Atlantic</td>
+											 <td>10,000</td>
+									 </tr>
+									 <tr>
+											 <td>Other Regions</td>
+											 <td>Unknown</td>
+									 </tr>
+							 </tbody>
+					 </table>
+			 </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Orca The Killer Whales</p>
+    </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const overviewText = document.querySelector('.overview-text');
+            overviewText.classList.add('visible');
+        }, 500);
+    });
+</script>
+</body>
+</html>

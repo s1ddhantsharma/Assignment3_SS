@@ -4,21 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Killer Whale (Orca)</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<style>
-.overview-text {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-}
+    <link rel="stylesheet" href="stylesass.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Slider Styles */
+        #slider {
+            position: relative;
+            max-width: 800px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 
-.overview-text.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-</style>
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slides img, .slides video {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .slider-arrow {
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        /* Button Styles */
+        #next-page {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #next-page button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: red; /* Change the background color to red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #next-page button:hover {
+            background-color: darkred; /* Optional: Change to a darker red on hover */
+        }
+
+        /* Lightbox Styles */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #lightbox-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #lightbox-img, #lightbox-video {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-arrow {
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+        }
+    </style>
+</head>
 <body>
+    <div class="container">
     <header>
         <h1>Killer Whale (Orcinus orca)</h1>
         <nav>
@@ -28,7 +129,7 @@
                 <li><a href="#habitat">Habitat</a></li>
                 <li><a href="#behavior">Behavior</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-								<li><a href="#count">World Count</a></li>
+                <li><a href="#count">World Count</a></li>
                 <li><a href="honesty.html">Honesty</a></li>
                 <li><a href="form.html">Contact Us</a></li>
             </ul>
@@ -36,12 +137,12 @@
     </header>
 
     <main>
-      <section id="overview">
-  <h2>Overview</h2>
-  <p class="overview-text">
-      The killer whale, sometimes referred to as the orca and scientifically named Orcinus orca, is a fascinating marine species that captivates people's attention all around the world. These sentient beings are actually the largest members of the dolphin family, despite their moniker.
-  </p>
-</section>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p class="overview-text">
+                The killer whale, sometimes referred to as the orca and scientifically named Orcinus orca, is a fascinating marine species that captivates people's attention all around the world. These sentient beings are actually the largest members of the dolphin family, despite their moniker.
+            </p>
+        </section>
 
         <section id="characteristics">
             <h2>Physical Characteristics</h2>
@@ -60,93 +161,109 @@
 
         <section id="gallery">
             <h2>Gallery</h2>
-            <div class="gallery-row">
-                <figure>
-                    <img src="img\thomas-lipke.jpg" alt="Killer Whale breaching the water surface">
-                    <figcaption>A Killer Whale breaching the water surface. Photo by Thomas Lipke on Unsplash.</figcaption>
-                </figure>
-                <figure>
-                    <img src="img\mike-doherty.jpg" alt="A Pod of Killer Whales swimming together">
-                    <figcaption>A pod of Killer Whales swimming together. Photo by Mike Doherty on Unsplash.</figcaption>
-                </figure>
-                <figure>
-                    <img src="img/iewek-gnos.jpg" alt="A Killer Whale underwater">
-                    <figcaption>A Killer Whale underwater. Photo by Iewek Gnos on Unsplash.</figcaption>
-                </figure>
+            <div id="slider">
+                <div class="slides">
+                    <img src="thomas-lipke.jpg" alt="Killer Whale breaching the water surface">
+                    <img src="mike-doherty.jpg" alt="A Pod of Killer Whales swimming together">
+                    <img src="iewek-gnos.jpg" alt="A Killer Whale underwater">
+                    <img src="leslie-driskill.jpg" alt="Killer Whales performing in water park">
+                    <img src="will-turner.jpg" alt="A Killer Whale swimming with its calf">
+                    <video controls>
+                        <source src="killerwhale1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <video controls>
+                        <source src="Whales Without Walls!.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="slider-nav">
+                    <span class="slider-arrow" id="prev">&#10094;</span>
+                    <span class="slider-arrow" id="next">&#10095;</span>
+                </div>
             </div>
-            <div class="gallery-row">
-                <figure>
-                    <img src="img/leslie-driskill.jpg" alt="Killer Whales performing in water park">
-                    <figcaption>Killer Whales performing in water park. Photo by Leslie Driskill on Unsplash.</figcaption>
-                </figure>
-                <figure>
-                    <img src="img/will-turner.jpg" alt="A Killer Whale swimming with it's calf">
-                    <figcaption>A Killer Whale swimming with it's calf Photo by Will Turner on Unsplash.</figcaption>
-                </figure>
-            </div>
-						<div class="gallery-row">
-    <figure>
-        <video controls width="320" height="240">
-            <source src="video/killerwhale1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <figcaption>Killer Whale swimming. Video by Ivan Stecko on Pexels.</figcaption>
-    </figure>
-    <figure>
-        <video controls width="320" height="240">
-            <source src="video/Whales Without Walls!.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <figcaption>Orcas migrating in numbers. Video by MarineBio.</figcaption>
-    </figure>
-</div>
-
         </section>
-				<section id="count">
-					 <h2>World Count</h2>
-					 <table>
-							 <thead>
-									 <tr>
-											 <th>Region</th>
-											 <th>Estimated Population</th>
-									 </tr>
-							 </thead>
-							 <tbody>
-									 <tr>
-											 <td>North Pacific</td>
-											 <td>25,000</td>
-									 </tr>
-									 <tr>
-											 <td>Antarctic</td>
-											 <td>70,000</td>
-									 </tr>
-									 <tr>
-											 <td>Norwegian Coast</td>
-											 <td>3,000</td>
-									 </tr>
-									 <tr>
-											 <td>North Atlantic</td>
-											 <td>10,000</td>
-									 </tr>
-									 <tr>
-											 <td>Other Regions</td>
-											 <td>Unknown</td>
-									 </tr>
-							 </tbody>
-					 </table>
-			 </section>
+
+        <section id="count">
+            <h2>World Count</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Estimated Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North Pacific</td>
+                        <td>25,000</td>
+                    </tr>
+                    <tr>
+                        <td>Antarctic</td>
+                        <td>70,000</td>
+                    </tr>
+                    <tr>
+                        <td>Norwegian Coast</td>
+                        <td>3,000</td>
+                    </tr>
+                    <tr>
+                        <td>North Atlantic</td>
+                        <td>10,000</td>
+                    </tr>
+                    <tr>
+                        <td>Other Regions</td>
+                        <td>Unknown</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="next-page">
+            <button onclick="window.location.href='form.html'">Next Page</button>
+        </section>
     </main>
 
     <footer>
         <p>&copy; 2024 Orca The Killer Whales</p>
     </footer>
+    </div>
+
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            const overviewText = document.querySelector('.overview-text');
-            overviewText.classList.add('visible');
-        }, 500);
-    });
-</script>
+        $(document).ready(function() {
+            const slides = $('.slides');
+            const slideCount = slides.children().length;
+            const slideWidth = $('#slider').width();
+            let currentIndex = 0;
+
+            function updateSlider() {
+                slides.css('transform', 'translateX(' + (-currentIndex * slideWidth) + 'px)');
+                // Pause all videos when sliding
+                slides.find('video').each(function() {
+                    this.pause();
+                });
+            }
+
+            $('#next').click(function() {
+                if (currentIndex < slideCount - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateSlider();
+            });
+
+            $('#prev').click(function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = slideCount - 1;
+                }
+                updateSlider();
+            });
+
+            // Initialize slider
+            updateSlider();
+        });
+    </script>
 </body>
 </html>

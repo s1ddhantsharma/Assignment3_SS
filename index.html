@@ -7,66 +7,16 @@
     <link rel="stylesheet" href="stylesass.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Slider Styles */
-        #slider {
-            position: relative;
-            max-width: 800px;
-            margin: 20px auto;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
+        .overview-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
 
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slides img, .slides video {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-
-        .slider-arrow {
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            margin: 0 10px;
-        }
-
-        /* Button Styles */
-        #next-page {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #next-page button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: red; /* Change the background color to red */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #next-page button:hover {
-            background-color: darkred; /* Optional: Change to a darker red on hover */
-        }
-
+.overview-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
         /* Lightbox Styles */
         #lightbox {
             position: fixed;
@@ -116,13 +66,19 @@
             cursor: pointer;
             padding: 10px;
         }
+
+        .gallery-items img, .gallery-items video {
+            width: 150px;
+            height: auto;
+            margin: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
     <header>
         <h1>Killer Whale (Orcinus orca)</h1>
-        <nav>
+        <nav id="navbar">
             <ul>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#characteristics">Characteristics</a></li>
@@ -161,26 +117,14 @@
 
         <section id="gallery">
             <h2>Gallery</h2>
-            <div id="slider">
-                <div class="slides">
-                    <img src="thomas-lipke.jpg" alt="Killer Whale breaching the water surface">
-                    <img src="mike-doherty.jpg" alt="A Pod of Killer Whales swimming together">
-                    <img src="iewek-gnos.jpg" alt="A Killer Whale underwater">
-                    <img src="leslie-driskill.jpg" alt="Killer Whales performing in water park">
-                    <img src="will-turner.jpg" alt="A Killer Whale swimming with its calf">
-                    <video controls>
-                        <source src="killerwhale1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <video controls>
-                        <source src="WhalesWithoutWalls.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="slider-nav">
-                    <span class="slider-arrow" id="prev">&#10094;</span>
-                    <span class="slider-arrow" id="next">&#10095;</span>
-                </div>
+            <div class="gallery-items">
+                <img src="thomas-lipke.jpg" alt="Killer Whale breaching the water surface" data-type="image">
+                <img src="mike-doherty.jpg" alt="A Pod of Killer Whales swimming together" data-type="image">
+                <img src="iewek-gnos.jpg" alt="A Killer Whale underwater" data-type="image">
+                <img src="leslie-driskill.jpg" alt="Killer Whales performing in water park" data-type="image">
+                <img src="will-turner.jpg" alt="A Killer Whale swimming with its calf" data-type="image">
+                <video src="killerwhale1.mp4" data-type="video"></video>
+                <video src="WhalesWithoutWalls.mp4" data-type="video"></video>
             </div>
         </section>
 
@@ -217,53 +161,91 @@
                 </tbody>
             </table>
         </section>
-
-        <section id="next-page">
-            <button onclick="window.location.href='form.html'">Next Page</button>
-        </section>
     </main>
 
     <footer>
         <p>&copy; 2024 Orca The Killer Whales</p>
     </footer>
+    <button id="next-page" onclick="window.location.href='form.html'">Next Page</button>
+
+    <!-- Lightbox HTML -->
+    <div id="lightbox">
+        <div id="lightbox-content">
+            <span id="lightbox-close">&times;</span>
+            <div id="lightbox-nav">
+                <span class="lightbox-arrow" id="lightbox-prev">&#10094;</span>
+                <span class="lightbox-arrow" id="lightbox-next">&#10095;</span>
+            </div>
+            <img id="lightbox-img" src="" alt="Lightbox Image" style="display: none;">
+            <video id="lightbox-video" controls style="display: none;">
+                <source id="lightbox-video-source" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
 
     <script>
         $(document).ready(function() {
-            const slides = $('.slides');
-            const slideCount = slides.children().length;
-            const slideWidth = $('#slider').width();
+            const items = $('.gallery-items img, .gallery-items video');
             let currentIndex = 0;
 
-            function updateSlider() {
-                slides.css('transform', 'translateX(' + (-currentIndex * slideWidth) + 'px)');
-                // Pause all videos when sliding
-                slides.find('video').each(function() {
-                    this.pause();
-                });
+            function showItem(index) {
+                const item = items.eq(index);
+                const type = item.data('type');
+
+                if (type === 'image') {
+                    $('#lightbox-video').hide();
+                    $('#lightbox-img').attr('src', item.attr('src')).show();
+                } else if (type === 'video') {
+                    $('#lightbox-img').hide();
+                    $('#lightbox-video-source').attr('src', item.attr('src'));
+                    $('#lightbox-video').show()[0].load();
+                }
+
+                $('#lightbox').fadeIn();
             }
 
-            $('#next').click(function() {
-                if (currentIndex < slideCount - 1) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0;
-                }
-                updateSlider();
+            items.on('click', function() {
+                currentIndex = items.index(this);
+                showItem(currentIndex);
             });
 
-            $('#prev').click(function() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                } else {
-                    currentIndex = slideCount - 1;
-                }
-                updateSlider();
+            $('#lightbox-close, #lightbox').on('click', function() {
+                $('#lightbox').fadeOut();
             });
 
-            // Initialize slider
-            updateSlider();
+            $('#lightbox-content').on('click', function(e) {
+                e.stopPropagation();
+            });
+
+            $('#lightbox-prev').on('click', function() {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+                showItem(currentIndex);
+            });
+
+            $('#lightbox-next').on('click', function() {
+                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                showItem(currentIndex);
+            });
         });
+    $(document).ready(function() {
+        var navbar = $('#navbar');
+        var sticky = navbar.offset().top;
+
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > sticky) {
+                navbar.addClass('fixed');
+            } else {
+                navbar.removeClass('fixed');
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const overviewText = document.querySelector('.overview-text');
+            overviewText.classList.add('visible');
+        }, 500);
+    });
     </script>
 </body>
 </html>
